@@ -1,3 +1,4 @@
+import csv
 import os
 
 
@@ -10,6 +11,17 @@ def read_data(file_name):
     """
     cwd_path = os.getcwd()
     file_path = os.path.join(cwd_path, file_name)
+    with open(file_name, "r") as csv_file:
+        reader = csv.DictReader(csv_file)
+        data = []
+
+        for row in reader:
+            for header, value in row.items():
+                if header not in data:
+                    data[header] = [int(value)] #value - nacitam string ale potrebuju cisla
+                else:
+                    data[header].append(int(value))
+    return data
 
 
 def main():
